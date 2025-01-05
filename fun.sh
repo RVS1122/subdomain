@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/bin/bash
+
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
@@ -29,12 +30,18 @@ echo -e "\e[34m ███████ ██    ██ ██████      �
      ██ ██    ██ ██   ██     ██   ██ ██    ██ ██  ██  ██ ██   ██ ██ ██  ██ ██ 
 ███████  ██████  ██████      ██████   ██████  ██      ██ ██   ██ ██ ██   ████ 
                                                                             
-                                                   
-                                                                                                          \e[0m "
-                                         
-read -p " enter the domain" hai
-assetfinder $ hai > subs
-cat subs | httprobe > live
-sort -u live > sorted
-cat sorted
+                                                                                                          \e[0m"
 
+read -p "Enter the domain: " hai
+
+# Correctly pass the domain to assetfinder
+assetfinder "$hai" > subs
+
+# Process subdomains and check if they are live
+cat subs | httprobe > live
+
+# Remove duplicates and sort
+sort -u live > sorted
+
+# Display the sorted live subdomains
+cat sorted
